@@ -1,4 +1,4 @@
-import User from "../model/user.model.js";
+import {User} from "../model/user.model.js";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -107,13 +107,6 @@ export const updateProfile = async (req, res) => {
         const { fullname, email, bio, phoneNumber, skills } = req.body;
         const file = req.file;
 
-        if (!fullname || !email || !bio || !phoneNumber || !skills) {
-            return res.status(400).json({
-                message: "Something is missing",
-                success: false
-            });
-        };
-
         //cloudinary...
         const skillsArray = skills.split(",");
         const userId = req.id; //middleware se aa raha
@@ -126,11 +119,11 @@ export const updateProfile = async (req, res) => {
             })
         }
         // Updating user
-        user.fullname = fullname;
-        user.email = email;
-        user.phoneNumber = phoneNumber;
-        user.profile.bio = bio;
-        user.profile.skills = skillsArray;
+        if (fullname) user.fullname = fullname;
+        if (email) user.email = email;
+        if (bio) user.profile.bio = bio;
+        if (phoneNumber) user.phoneNumber = phoneNumber;
+        if (skillsArray) user.profile.skills = skillsArray;
 
         //resume 
         await User.save(user);
