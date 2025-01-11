@@ -1,6 +1,6 @@
 import User from "../model/user.model.js";
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken'
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 export const register = async (req, res) => {
     try {
@@ -102,7 +102,7 @@ export const logout = async (req, res) => {
     }
 }
 
-export const update = async (req, res) => {
+export const updateProfile = async (req, res) => {
     try {
         const { fullname, email, bio, phoneNumber, skills } = req.body;
         const file = req.file;
