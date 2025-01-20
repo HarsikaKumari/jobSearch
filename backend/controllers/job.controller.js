@@ -49,7 +49,7 @@ export const getAllJobs = async (req, res) => {
             ]
         };
         const job = await Job.find(query).populate({
-            path: "Company"
+            path: "company"
         }).sort({ createdAt: -1 });
         if (!job) {
             return res.status(404).json({
