@@ -4,14 +4,15 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@radix-ui/react-popover";
-import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button";
 import { LogOut, User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function Navbar() {
-  const user = true;
+  const user = false;
   return (
-    <div className="bg-white">
+    <div className="bg-white px-6">
       <div className="flex items-center justify-between m-6">
         <h1 className="text-2xl font-bold">
           Job <span className="text-[#727D73]"> Portal </span>
@@ -24,19 +25,23 @@ function Navbar() {
           </ul>
           {!user ? (
             <div className="flex items-center gap-2">
-              <Button className="rounded-xl" variant="outline">
-                Login
-              </Button>
-              <Button className="bg-[#AAB99A] hover:bg-[#D0DDD0] rounded-xl">
-                SignUp
-              </Button>
+              <Link to="/login">
+                <Button className="rounded-xl" variant="outline">
+                  Login
+                </Button>
+              </Link>
+              <Link to="/signup">
+                <Button className="bg-[#AAB99A] hover:bg-[#D0DDD0] rounded-xl">
+                  SignUp
+                </Button>
+              </Link>
             </div>
           ) : (
             <Popover>
               <PopoverTrigger asChild>
                 <Avatar className="cursor-pointer">
                   <AvatarImage
-                    className="rounded-full w-9"
+                    
                     src="https://github.com/shadcn.png"
                     alt="@shadcn"
                   />
