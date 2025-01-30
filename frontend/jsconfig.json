@@ -1,4 +1,10 @@
 {
+  "files": [],
+  "references": [
+    {
+      "path": "./jsconfig.json"
+    }
+  ],
   "compilerOptions": {
     "checkJs": false,
     "module": "ESNext",
@@ -6,12 +12,12 @@
     "baseUrl": ".",
     "paths": {
       "@/": [
-        "./src/"
+        "./src/*"
       ]
     }
   },
   "exclude": [
     "node_modules",
     "**/node_modules/*"
-  ]
+  ],
 }

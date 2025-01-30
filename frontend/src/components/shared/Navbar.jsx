@@ -15,7 +15,7 @@ function Navbar() {
     <div className="bg-white px-6">
       <div className="flex items-center justify-between m-6">
         <h1 className="text-2xl font-bold">
-          Job <span className="text-[#727D73]"> Portal </span>
+          Job <span className="text-[#3D0000]"> Portal </span>
         </h1>
         <div className="flex items-center gap-12">
           <ul className="flex font-medium text-center gap-6">
@@ -31,7 +31,7 @@ function Navbar() {
                 </Button>
               </Link>
               <Link to="/signup">
-                <Button className="bg-[#AAB99A] hover:bg-[#D0DDD0] rounded-xl">
+                <Button className="bg-[#950101] hover:bg-[#FF0000] rounded-xl">
                   SignUp
                 </Button>
               </Link>
