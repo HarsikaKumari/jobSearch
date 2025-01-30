@@ -8,6 +8,9 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { USER_API_END_POINT } from '../../utils/constants.js'
 import { toast } from "sonner"
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoading } from '@/redux/authSlice';
+import { Loader2 } from 'lucide-react';
 
 
 function Signup() {
@@ -28,8 +31,10 @@ function Signup() {
 
     }
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { loading } = useSelector(state => state.auth);
     // console.log(input.fullname);
-    
+
     const submitHandler = async (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -43,8 +48,8 @@ function Signup() {
         }
 
         try {
-            console.log("", formData);
-            
+            dispatch(setLoading(true));
+
             const res = await axios.post(`${USER_API_END_POINT}/register`, formData,
                 {
                     headers: {
@@ -60,6 +65,8 @@ function Signup() {
         } catch (error) {
             console.log(error);
             toast.error(error.response.data.message);
+        } finally {
+            dispatch(setLoading(false));
         }
     }
 
@@ -144,7 +151,9 @@ function Signup() {
                             />
                         </div>
                     </div>
-                    <Button type="submit" className="bg-black text-white w-full my-4">SignUp</Button>
+                    {
+                         loading ? <div className="w-full my-4"><Loader2 className="mr-2 h-4 w-4 animate-spin"> Please wait! </Loader2></div> : <Button type="submit" className="bg-black text-white w-full my-4">SignUp</Button>
+                    }
                     <span className="text-sm">Already have an account? <Link to="/login" className='text-blue-600'>Login</Link> </span>
                 </form>
             </div>
