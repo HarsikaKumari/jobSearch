@@ -4,7 +4,11 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button"
 import { RadioGroup } from "@/components/ui/radio-group"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { USER_API_END_POINT } from '../../utils/constants.js'
+import { toast } from "sonner"
+
 
 function Signup() {
     const [input, setInput] = useState({
@@ -23,9 +27,40 @@ function Signup() {
         setInput({ ...input, file: e.target.files?.[0] });
 
     }
-    const submitHandler = (e) => {
+    const navigate = useNavigate();
+    // console.log(input.fullname);
+    
+    const submitHandler = async (e) => {
         e.preventDefault();
-        console.log(input);
+        const formData = new FormData();
+        formData.append("fullname", input.fullname);
+        formData.append("email", input.email);
+        formData.append("phoneNumber", input.phoneNumber);
+        formData.append("password", input.password);
+        formData.append("role", input.role);
+        if (input.file) {
+            formData.append("file", input.file);
+        }
+
+        try {
+            console.log("", formData);
+            
+            const res = await axios.post(`${USER_API_END_POINT}/register`, formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                },
+                { withCredentials: true }
+            );
+            if (res.data.success) {
+                navigate("/login")
+                toast.success(res.data.message);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response.data.message);
+        }
     }
 
     return (
