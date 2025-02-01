@@ -1,5 +1,7 @@
 // import React from 'react'
+import CategoryCarousel from './CategoryCarousel.jsx'
 import HeroSection from './HeroSection.jsx'
+import LatestJobs from './LatestJobs.jsx'
 import Navbar from './shared/Navbar.jsx'
 
 function Home() {
@@ -7,6 +9,8 @@ function Home() {
     <div>
         <Navbar />
         <HeroSection />
+        <CategoryCarousel />
+        <LatestJobs />
     </div>
   )
 }
