@@ -31,7 +31,7 @@ function Navbar() {
                 </Button>
               </Link>
               <Link to="/signup">
-                <Button className="bg-[#950101] hover:bg-[#FF0000] rounded-xl">
+                <Button className=" text-white bg-[#950101] hover:bg-[#FF0000] rounded-xl">
                   SignUp
                 </Button>
               </Link>
