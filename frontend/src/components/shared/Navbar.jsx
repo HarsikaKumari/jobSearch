@@ -19,9 +19,9 @@ function Navbar() {
         </h1>
         <div className="flex items-center gap-12">
           <ul className="flex font-medium text-center gap-6">
-            <li>Home</li>
-            <li>Job</li>
-            <li>Browser</li>
+            <li> <Link to="/" > Home </Link> </li>
+            <li> <Link to="/jobs" > Job </Link> </li>
+            <li> <Link to="/" > Browser </Link> </li>
           </ul>
           {!user ? (
             <div className="flex items-center gap-2">
@@ -41,7 +41,7 @@ function Navbar() {
               <PopoverTrigger asChild>
                 <Avatar className="cursor-pointer">
                   <AvatarImage
-                    
+
                     src="https://github.com/shadcn.png"
                     alt="@shadcn"
                   />
