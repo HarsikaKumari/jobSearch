@@ -1,4 +1,4 @@
-// import React from "react";
+import { useSelector } from "react-redux";
 import {
   Popover,
   PopoverContent,
@@ -10,7 +10,9 @@ import { LogOut, User } from "lucide-react";
 import { Link } from "react-router-dom";
 
 function Navbar() {
-  const user = false;
+  // const user = false;
+  const { user } = useSelector(state => state.auth);
+  console.log("User:", user);
   return (
     <div className="bg-white px-6">
       <div className="flex items-center justify-between m-6">
@@ -21,7 +23,7 @@ function Navbar() {
           <ul className="flex font-medium text-center gap-6">
             <li> <Link to="/" > Home </Link> </li>
             <li> <Link to="/jobs" > Job </Link> </li>
-            <li> <Link to="/" > Browser </Link> </li>
+            <li> <Link to="/browse" > Browser </Link> </li>
           </ul>
           {!user ? (
             <div className="flex items-center gap-2">
