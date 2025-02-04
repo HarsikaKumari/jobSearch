@@ -67,7 +67,7 @@ function Navbar() {
                       <div className="flex flex-col text-gray-600">
                         <div className="flex w-fit items-center cursor-pointer">
                           <User />
-                          <Button variant="link">View profile</Button>
+                          <Button variant="link"> <Link to="/profile"> View profile </Link></Button>
                         </div>
                         <div className="flex w-fit items-center cursor-pointer">
                           <LogOut />
