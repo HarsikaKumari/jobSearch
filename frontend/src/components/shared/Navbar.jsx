@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 function Navbar() {
   // const user = false;
   const { user } = useSelector(state => state.auth);
-  console.log("User:", user);
+  // console.log("User:", user);
   return (
     <div className="bg-white px-6">
       <div className="flex items-center justify-between m-6">

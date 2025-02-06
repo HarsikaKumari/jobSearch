@@ -5,11 +5,14 @@ import { Label } from './ui/label.jsx';
 import { Contact, Mail, Pen } from 'lucide-react';
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import AppliedJobsTable from './AppliedJobsTable.jsx';
+import { useState } from 'react';
+import UpdateProfileDialog from './UpdateProfileDialog.jsx';
 
 const skillArray = ["React", "Java", "JavaScript", "Python", "Cloud Computing"];
 const isResume = true;
 
 function Profile() {
+  const [open, setOpen] = useState(false);
   return (
     <div>
       <Navbar />
@@ -24,7 +27,7 @@ function Profile() {
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.</p>
             </div>
           </div>
-          <Button className="text-right" variant="outline"> <Pen /></Button>
+          <Button onClick={()=> setOpen(true)} className="text-right" variant="outline"> <Pen /></Button>
         </div>
         <div className='my-5'>
           <div className='flex items-center gap-4 my-2'>
@@ -55,6 +58,7 @@ function Profile() {
         <h1 className='font-bold text-lg my-5'>Applied Job</h1>
         <AppliedJobsTable />
       </div>
+      <UpdateProfileDialog open={open} setOpen={setOpen} />
     </div>
   )
 }
