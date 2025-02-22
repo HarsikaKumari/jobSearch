@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import { toast } from "sonner";
 import axios from "axios";
 import { USER_API_END_POINT } from "@/utils/constants.js";
-import setUser from '../redux/authSlice.js'
+import { setUser } from '../redux/authSlice.js'
 
 const UpdateProfileDialog = ({ open, setOpen }) => {
 
@@ -45,16 +45,16 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         if (input.file) {
             formData.append("file", input.file);
         }
-        console.log(formData);
 
         try {
+            setLoading(true)
             const res = await axios.post(`${USER_API_END_POINT}/profile/update`, formData,
                 {
                     headers: {
                         'Content-Type': 'multipart/form-data'
-                    }
+                    },
+                    withCredentials: true
                 },
-                { withCredentials: true }
             );
             if (res.data.success) {
                 dispatch(setUser(res.data.user));
@@ -62,10 +62,11 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
             }
         } catch (error) {
             console.log(error);
-            toast.error(error.response.data.message);
+            toast.error(error.message);
+        } finally {
+            setLoading(false)
         }
         setOpen(false);
-        console.log(input);
 
     }
     const fileChangeHandler = (e) => {

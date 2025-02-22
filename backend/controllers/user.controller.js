@@ -1,6 +1,8 @@
 import { User } from "../model/user.model.js";
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 import jwt from 'jsonwebtoken';
+import getDataUri from '../utils/dataUri.js'
+import cloudinary from "../utils/coudinary.js";
 
 export const register = async (req, res) => {
     try {
@@ -11,6 +13,11 @@ export const register = async (req, res) => {
                 success: false
             });
         };
+
+        const file = req.file;
+        const fileUri = getDataUri(file);
+        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+
         const user = await User.findOne({ email })
         if (user) {
             return res.status(400).json({
@@ -26,6 +33,9 @@ export const register = async (req, res) => {
             password: hashedPassword,
             phoneNumber,
             role,
+            profile: {
+                profilePhoto: cloudResponse.secure_url,
+            }
         })
 
         return res.status(201).json({
@@ -90,9 +100,8 @@ export const login = async (req, res) => {
 
         return res.status(200)
             .cookie("token", token, {
-                // maxAge: 1 * 24 * 60 * 60 * 1000,
+                maxAge: 1 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
-                secure: true,
                 sameSite: 'Strict'
             })
             .json({
@@ -117,11 +126,14 @@ export const logout = async (req, res) => {
 }
 
 export const updateProfile = async (req, res) => {
+
     try {
         const { fullname, email, bio, phoneNumber, skills } = req.body;
-        //const file = req.file;
+        // take file input
+        const file = req.file;
+        const fileUri = getDataUri(file);
+        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
-        //cloudinary...
         let skillsArray;
         if (skills) {
             skillsArray = skills.split(",")
@@ -144,6 +156,11 @@ export const updateProfile = async (req, res) => {
         if (skillsArray) user.profile.skills = skillsArray;
 
         //resume 
+        if (cloudResponse) {
+            user.profile.resume = cloudResponse.secure_url             // saving url
+            user.profile.resumeOriginalName = file.originalname     //saving file name
+        }
+
         await user.save();
 
         user = {

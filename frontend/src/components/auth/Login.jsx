@@ -36,16 +36,15 @@ function Login() {
         {
           headers: {
             'Content-Type': 'application/json'
-          }
+          },
+          withCredentials: true
         },
-        { withCredentials: true }
       );
       if (res.data.success) {
         navigate("/")
         dispatch(setUser(res.data.user));
         toast.success(res.data.message);
       }
-      console.log(res.data);
 
     } catch (error) {
       console.log(error);

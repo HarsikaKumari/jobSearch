@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Popover,
   PopoverContent,
@@ -7,12 +7,32 @@ import {
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button";
 import { LogOut, User } from "lucide-react";
-import { Link } from "react-router-dom";
+import { data, Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { USER_API_END_POINT } from "../../utils/constants";
+import { setUser } from "../../redux/authSlice";
+import { toast } from "sonner";
 
 function Navbar() {
-  // const user = false;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { user } = useSelector(state => state.auth);
-  // console.log("User:", user);
+
+  const logoutHandler = async () => {
+    try {
+      const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
+
+      if (res.data.success) {
+        dispatch(setUser(null));
+        navigate("/");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      // toast.error(error);
+    }
+  }
   return (
     <div className="bg-white px-6">
       <div className="flex items-center justify-between m-6">
@@ -44,7 +64,7 @@ function Navbar() {
                 <Avatar className="cursor-pointer">
                   <AvatarImage
 
-                    src="https://github.com/shadcn.png"
+                    src={user?.profile?.profilePhoto}
                     alt="@shadcn"
                   />
                 </Avatar>
@@ -55,14 +75,14 @@ function Navbar() {
                     <Avatar className="cursor-pointer">
                       <AvatarImage
                         className="rounded-full w-9"
-                        src="https://github.com/shadcn.png"
+                        src={user?.profile?.profilePhoto}
                         alt="@shadcn"
                       />
                     </Avatar>
                     <div>
-                      <p className="font-medium">Harsika kumari</p>
+                        <p className="font-medium">{user?.fullname}</p>
                       <p className="text-sm text-muted-foreground">
-                        Lorem ipsum dolor sit amet.
+                        {user?.profile?.bio}
                       </p>
                       <div className="flex flex-col text-gray-600">
                         <div className="flex w-fit items-center cursor-pointer">
@@ -71,7 +91,7 @@ function Navbar() {
                         </div>
                         <div className="flex w-fit items-center cursor-pointer">
                           <LogOut />
-                          <Button variant="link">Logout</Button>
+                          <Button onClick={logoutHandler} variant="link">Logout</Button>
                         </div>
                       </div>
                     </div>

@@ -7,13 +7,16 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import AppliedJobsTable from './AppliedJobsTable.jsx';
 import { useState } from 'react';
 import UpdateProfileDialog from './UpdateProfileDialog.jsx';
+import { useSelector } from 'react-redux';
 
-const skillArray = ["React", "Java", "JavaScript", "Python", "Cloud Computing"];
 const isResume = true;
 
 function Profile() {
   const [open, setOpen] = useState(false);
+  const { user } = useSelector(store => store.auth);  
+
   return (
+
     <div>
       <Navbar />
       <div className="max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl my-5 p-8">
@@ -23,34 +26,35 @@ function Profile() {
               <AvatarImage src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Wipro_Primary_Logo_Color_RGB.svg" />
             </Avatar>
             <div>
-              <h1 className='font-medium text-xl'>Full Name</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.</p>
+              <h1 className='font-medium text-xl'>{user?.fullname}</h1>
+              <p>{user?.profile?.bio}</p>
             </div>
           </div>
-          <Button onClick={()=> setOpen(true)} className="text-right" variant="outline"> <Pen /></Button>
+          <Button onClick={() => setOpen(true)} className="text-right" variant="outline"> <Pen /></Button>
         </div>
         <div className='my-5'>
           <div className='flex items-center gap-4 my-2'>
             <Mail />
-            <span>hello@gmail.com</span>
+            <span>{user?.email}</span>
           </div>
           <div className='flex items-center gap-4 my-2'>
             <Contact />
-            <span>82748638728</span>
+            <span>{user?.phoneNumber}</span>
           </div>
         </div>
         <div className='my-5'>
           <h1 className='font-bold'>Skills</h1>
           <div className='flex items-center gap-2'>
             {
-              skillArray.length !== 0 ? skillArray.map((skill, index) => <Badge className="bg-black text-[white] hover:bg-black hover:text-white" key={index}>{skill}</Badge>) : <p>No skills added</p>
+              user?.profile?.skills.length !== 0 ? user?.profile?.skills.map((skill, index) => <Badge key={index}>{skill}</Badge>) : <p>No skills added</p>
             }
           </div>
         </div>
         <div className='grid w-full max-w-sm items-center gap-1.5'>
           <Label className="text-md font-bold">Resume</Label>
+          {console.log(user?.profile)}
           {
-            isResume ? <a target='blank' className='text-blue-500 w-full hover-underline' href='https://www.linkedin.com/in/harsika-kumari/'>Harsika kumari</a> : <span>NA</span>
+            isResume ? <a target='blank' className='text-blue-500 w-full hover-underline' href={user?.profile?.resume}>{user?.profile?.resumeOriginalName}</a> : <span>NA</span>
           }
         </div>
       </div>
