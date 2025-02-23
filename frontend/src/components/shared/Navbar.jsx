@@ -7,10 +7,9 @@ import {
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button";
 import { LogOut, User } from "lucide-react";
-import { data, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { USER_API_END_POINT } from "../../utils/constants";
-import { setUser } from "../../redux/authSlice";
 import { toast } from "sonner";
 
 function Navbar() {
@@ -24,7 +23,7 @@ function Navbar() {
       const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
 
       if (res.data.success) {
-        dispatch(setUser(null));
+        dispatch();
         navigate("/");
         toast.success(res.data.message);
       }
