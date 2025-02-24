@@ -1,4 +1,3 @@
-// import React from 'react'
 import useGetAllJobs from '../hooks/useGetAllJobs.jsx'
 import CategoryCarousel from './CategoryCarousel.jsx'
 import HeroSection from './HeroSection.jsx'

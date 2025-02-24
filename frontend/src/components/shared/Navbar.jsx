@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { USER_API_END_POINT } from "../../utils/constants";
 import { toast } from "sonner";
+import { setUser } from "@/redux/authSlice";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ function Navbar() {
       const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
 
       if (res.data.success) {
-        dispatch();
+        dispatch(setUser(null));
         navigate("/");
         toast.success(res.data.message);
       }
