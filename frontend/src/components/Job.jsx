@@ -3,10 +3,11 @@ import { Button } from './ui/button.jsx'
 import { Avatar, AvatarImage } from './ui/avatar.jsx'
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types'
 
-function Job() {
+const Job = (props) => {
+  const { job } = props;
   const navigate = useNavigate();
-  const jobId = 1;
   return (
     <div className='p-5 rounded-md shadow-xl bg-white border border-gray-100'>
       <div className='flex items-center justify-between'>
@@ -22,13 +23,13 @@ function Job() {
           </Avatar>
         </Button>
         <div>
-          <h1 className='font-medium text-lg'>Company Name</h1>
+          <h1 className='font-medium text-lg'>{job?.company?.name}</h1>
           <p className='text-sm text-gray-500'>India</p>
         </div>
       </div>
       <div>
-        <div className='font-bold text-lg my-2'>Title</div>
-        <p className='text-sm text-gray-600'>lorem Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio lorem.</p>
+        <div className='font-bold text-lg my-2'>{job?.title}</div>
+        <p className='text-sm text-gray-600'>{job?.description}</p>
       </div>
       <div className="flex items-center gap-2 mt-4">
         <Badge className="text-blue-700 font-bold" variant="ghost">
@@ -43,11 +44,14 @@ function Job() {
       </div>
 
       <div className='flex items-center gap-4 my-3'>
-        <Button variant="outline" onClick={() => navigate(`/description/${jobId}`)}>Details</Button>
+        <Button variant="outline" onClick={() => navigate(`/description/${job._id}`)}>Details</Button>
         <Button className="bg-purple-700">Save for later </Button>
       </div>
     </div>
   )
 }
 
+Job.propTypes = {
+  job: PropTypes.any
+}
 export default Job
