@@ -4,7 +4,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@radix-ui/react-popover";
-import { Avatar, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { LogOut, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -17,11 +17,13 @@ function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { user } = useSelector(state => state.auth);
+  const { user } = useSelector((state) => state.auth);
 
   const logoutHandler = async () => {
     try {
-      const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
+      const res = await axios.get(`${USER_API_END_POINT}/logout`, {
+        withCredentials: true,
+      });
 
       if (res.data.success) {
         dispatch(setUser(null));
@@ -32,7 +34,7 @@ function Navbar() {
       console.log(error);
       // toast.error(error);
     }
-  }
+  };
   return (
     <div className="bg-white px-6">
       <div className="flex items-center justify-between m-6">
@@ -41,9 +43,33 @@ function Navbar() {
         </h1>
         <div className="flex items-center gap-12">
           <ul className="flex font-medium text-center gap-6">
-            <li> <Link to="/" > Home </Link> </li>
-            <li> <Link to="/jobs" > Job </Link> </li>
-            <li> <Link to="/browse" > Browser </Link> </li>
+            {user && user.role === "admin" ? (
+              <>
+                <li>
+                  {" "}
+                  <Link to="/admin/companies"> Companies </Link>{" "}
+                </li>
+                <li>
+                  {" "}
+                  <Link to="/admin/jobs"> Job </Link>{" "}
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  {" "}
+                  <Link to="/"> Home </Link>{" "}
+                </li>
+                <li>
+                  {" "}
+                  <Link to="/jobs"> Job </Link>{" "}
+                </li>
+                <li>
+                  {" "}
+                  <Link to="/browse"> Browser </Link>{" "}
+                </li>
+              </>
+            )}
           </ul>
           {!user ? (
             <div className="flex items-center gap-2">
@@ -63,7 +89,6 @@ function Navbar() {
               <PopoverTrigger asChild>
                 <Avatar className="cursor-pointer">
                   <AvatarImage
-
                     src={user?.profile?.profilePhoto}
                     alt="@shadcn"
                   />
@@ -80,18 +105,25 @@ function Navbar() {
                       />
                     </Avatar>
                     <div>
-                        <p className="font-medium">{user?.fullname}</p>
+                      <p className="font-medium">{user?.fullname}</p>
                       <p className="text-sm text-muted-foreground">
                         {user?.profile?.bio}
                       </p>
                       <div className="flex flex-col text-gray-600">
-                        <div className="flex w-fit items-center cursor-pointer">
-                          <User />
-                          <Button variant="link"> <Link to="/profile"> View profile </Link></Button>
-                        </div>
+                        {user && user.role === "student" && (
+                          <div className="flex w-fit items-center cursor-pointer">
+                            <User />
+                            <Button variant="link">
+                              {" "}
+                              <Link to="/profile"> View profile </Link>
+                            </Button>
+                          </div>
+                        )}
                         <div className="flex w-fit items-center cursor-pointer">
                           <LogOut />
-                          <Button onClick={logoutHandler} variant="link">Logout</Button>
+                          <Button onClick={logoutHandler} variant="link">
+                            Logout
+                          </Button>
                         </div>
                       </div>
                     </div>
