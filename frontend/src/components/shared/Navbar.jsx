@@ -43,7 +43,7 @@ function Navbar() {
         </h1>
         <div className="flex items-center gap-12">
           <ul className="flex font-medium text-center gap-6">
-            {user && user.role === "admin" ? (
+            {user && user.role === "recruiter" ? (
               <>
                 <li>
                   {" "}
