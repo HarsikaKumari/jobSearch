@@ -19,9 +19,9 @@ function CreateCompanies() {
             const res = await axios.post(`${COMPANY_API_END_POINT}/register`, { companyName },
                 {
                     headers: {
-                        'content-type': 'application/json',
+                        'Content-Type': 'application/json'
                     },
-                    withCredentials: true,
+                    withCredentials: true
                 },
             );
             if (res?.data?.success) {
@@ -31,6 +31,7 @@ function CreateCompanies() {
                 toast.success(res.data.message);
             }
         } catch (error) {
+            toast.error(error.response.data.message);
             console.log(error);
         }
     }
@@ -48,7 +49,7 @@ function CreateCompanies() {
                     type="text"
                     className="my-2"
                     placeholder="Eg. Wipro"
-                    setCompanyName={(e) => setCompanyName(e.target.value)}
+                    onChange={(e) => setCompanyName(e.target.value)}
                 />
                 <div className="flex items-center gap-2 my-10">
                     <Button variant="outline" onClick={() => navigate('/admin/companies')}>Cancel</Button>
