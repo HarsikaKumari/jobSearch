@@ -9,11 +9,13 @@ import { COMPANY_API_END_POINT } from "../../utils/constants"
 import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "sonner"
 import { useSelector } from "react-redux"
+import useGetCompanyById from "../../hooks/useGetCompanyById"
 
 const CompanySetup = () => {
-  const {singleCompany} = useSelector(state => state.company)
-  const [loading, setLoading] = useState(false)
   const param = useParams()
+  useGetCompanyById(param.id);
+  const { singleCompany } = useSelector(state => state.company)
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const [input, setInput] = useState({
     name: "",
@@ -31,14 +33,14 @@ const CompanySetup = () => {
     setInput({ ...input, file })
   }
 
-  const submitHandler = async(e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("name", input.name);
     formData.append("description", input.description);
     formData.append("website", input.website);
     formData.append("location", input.location);
-    if(input.file) {
+    if (input.file) {
       formData.append("file", input.file);
     }
     try {
@@ -51,7 +53,7 @@ const CompanySetup = () => {
           withCredentials: true
         }
       );
-      if(res?.data?.success) {
+      if (res?.data?.success) {
         console.log(res.data.message);
         toast.message(res.data.message);
         navigate('/admin/companies');
@@ -72,7 +74,7 @@ const CompanySetup = () => {
       file: singleCompany.file || null
     })
   }, [singleCompany])
-  
+
 
   return (
     <div>
