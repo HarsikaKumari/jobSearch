@@ -114,7 +114,6 @@ function Navbar() {
                           <div className="flex w-fit items-center cursor-pointer">
                             <User />
                             <Button variant="link">
-                              {" "}
                               <Link to="/profile"> View profile </Link>
                             </Button>
                           </div>

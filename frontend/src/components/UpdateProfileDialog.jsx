@@ -15,9 +15,12 @@ import { useSelector } from "react-redux";
 import { toast } from "sonner";
 import axios from "axios";
 import { USER_API_END_POINT } from "@/utils/constants.js";
-import { setUser } from '../redux/authSlice.js'
+import { setUser } from '../redux/authSlice.js';
+import PropTypes from "prop-types";
 
-const UpdateProfileDialog = ({ open, setOpen }) => {
+const UpdateProfileDialog = (props) => {
+    const open = props.open
+    const setOpen = props.setOpen
 
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
@@ -77,7 +80,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     return (
         <div>
             <Dialog open={open}>
-                <DialogContent className="sm:max-w-[425px]" onInteractOutside={() => setOpen(false)}>
+                <DialogContent className="sm:max-w-[425px]" onInteractOutside={() => { setOpen(false) }}>
                     <DialogHeader>
                         <DialogTitle>Update Profile</DialogTitle>
                         <form onSubmit={submitHandler}>
@@ -141,7 +144,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                     <Label htmlFor="resume" className="text-right">Resume</Label>
                                     <input type="file"
                                         name="file"
-                                        value={input.resume}
+                                        value={input?.profile?.resumeOriginalName}
                                         onChange={fileChangeHandler}
                                         accept="application/pdf"
                                         id="file"
@@ -150,7 +153,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                             </div>
                             <DialogFooter>
                                 {
-                                    loading ? <div className="w-full my-4"><Loader2 className="mr-2 h-4 w-4 animate-spin"> Please wait! </Loader2></div> : <Button type="submit" className="w-full my-4">Update</Button>
+                                    loading ? <div className="w-full my-4"><Loader2 className="mr-2 h-4 w-4 animate-spin"></Loader2> <span>Please wait!</span></div> : <Button type="submit" className="w-full my-4">Update</Button>
                                 }
                             </DialogFooter>
                         </form>
@@ -162,4 +165,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     )
 }
 
+UpdateProfileDialog.propTypes = {
+    open: PropTypes.object
+};
+UpdateProfileDialog.propTypes = {
+    setOpen: PropTypes.object
+};
 export default UpdateProfileDialog
