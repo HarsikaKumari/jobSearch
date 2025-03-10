@@ -8,12 +8,14 @@ import AppliedJobsTable from './AppliedJobsTable.jsx';
 import { useState } from 'react';
 import UpdateProfileDialog from './UpdateProfileDialog.jsx';
 import { useSelector } from 'react-redux';
+import useGetAppliedJobs from '../hooks/useGetAppliedJobs.jsx';
 
 const isResume = true;
 
 function Profile() {
+  useGetAppliedJobs();
   const [open, setOpen] = useState(false);
-  const { user } = useSelector(store => store.auth);  
+  const { user } = useSelector(store => store.auth);
 
   return (
 
@@ -52,7 +54,6 @@ function Profile() {
         </div>
         <div className='grid w-full max-w-sm items-center gap-1.5'>
           <Label className="text-md font-bold">Resume</Label>
-          {console.log(user?.profile)}
           {
             isResume ? <a target='blank' className='text-blue-500 w-full hover-underline' href={user?.profile?.resume}>{user?.profile?.resumeOriginalName}</a> : <span>NA</span>
           }

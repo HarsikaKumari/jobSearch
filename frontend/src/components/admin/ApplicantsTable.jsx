@@ -12,14 +12,34 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import axios from "axios";
 import { MoreHorizontal } from "lucide-react";
 import { useSelector } from "react-redux";
+import { APPLICATION_API_END_POINT } from "../../utils/constants";
+import { toast } from "sonner";
 
 const shortlistingStatus = ["Accepted", "Rejected"];
 
 const ApplicantsTable = () => {
   const { applicants } = useSelector((store) => store.application);
   // console.log(applicants.application[0].applicant);
+
+  const statusHandler = async (status, id) => {
+    try {
+      const res = await axios.post(
+        `${APPLICATION_API_END_POINT}/status/${id}/update`,
+        { status },
+        { withCredentials: true }
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
 
   return (
     <div>
@@ -65,7 +85,11 @@ const ApplicantsTable = () => {
                     </PopoverTrigger>
                     <PopoverContent className="w-32">
                       {shortlistingStatus.map((status, index) => {
-                        return <div key={index}>{status}</div>;
+                        return (
+                          <div onClick={() => {statusHandler(status, item?._id)}} key={index}>
+                            <span className="cursor-pointer">{status}</span>
+                          </div>
+                        );
                       })}
                     </PopoverContent>
                   </Popover>

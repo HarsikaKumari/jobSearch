@@ -16,7 +16,7 @@ function CategoryCarousel() {
         "DevOps Engineer",
         "UI/UX Designer",
         "Data Scientist",
-        "Machine Learning Engineer",
+        "ML Engineer",
         "QA Engineer",
         "Mobile App Developer",
     ];
@@ -28,7 +28,7 @@ function CategoryCarousel() {
                     {
                         categories.map((category, index) => (
                             <CarouselItem key={index} className="basis-1/2 md:basis-1/2 lg:basis-1/3">
-                                <Button className="rounded-xl text-white bg-[#911b1b] hover:bg-[#FF0000]" variant="outline">{category}</Button>
+                                <Button className="rounded-xl" variant="outline">{category}</Button>
                             </CarouselItem>
                         ))
                     }
