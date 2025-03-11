@@ -25,7 +25,7 @@ function Jobs() {
 
   useEffect(() => {
     return () => {
-      dispatch(setSearchedQuery(""))
+      dispatch(setSearchedQuery(" "))
     }
   }, [])
 
