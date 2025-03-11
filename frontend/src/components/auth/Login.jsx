@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input";
@@ -14,6 +14,7 @@ import { Loader2 } from "lucide-react";
 
 
 function Login() {
+
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -26,7 +27,7 @@ function Login() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading } = useSelector(state => state.auth);
+  const { loading, user } = useSelector(state => state.auth);
   const submitHandler = async (e) => {
 
     e.preventDefault();
@@ -53,6 +54,12 @@ function Login() {
       dispatch(setLoading(false));
     }
   }
+
+  useEffect(() => {
+    if (user) {
+      navigate("/")
+    }
+  }, [])
 
   return (
     <div>

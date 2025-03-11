@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Navbar from "../shared/Navbar";
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input";
@@ -32,7 +32,7 @@ function Signup() {
     }
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { loading } = useSelector(state => state.auth);
+    const { loading, user } = useSelector(state => state.auth);
     // console.log(input.fullname);
 
     const submitHandler = async (e) => {
@@ -69,6 +69,13 @@ function Signup() {
             dispatch(setLoading(false));
         }
     }
+
+    useEffect(() => {
+        if (user) {
+          navigate("/")
+        }
+      }, [])
+    
 
     return (
         <div>
