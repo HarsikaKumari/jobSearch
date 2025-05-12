@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(urlencoded({ extended: true }));
 app.use(cookieParser());
 const corsOption = {
-    origin: "http://localhost:5173",
+    origin: "https://job-search-lovat-theta.vercel.app",
     credentials: true,
 }
 app.use(cors(corsOption));
@@ -29,7 +29,6 @@ app.use('/api/v1/application', applicationRoute);
 
 const PORT = 3000 || process.env.PORT;
 
-app.listen(PORT, () => {
-    connectDB();
-    console.log(`Server running on port ${PORT}`);
-})
+export default function handler(req, res) {
+    res.status(200).json({ message: 'Hello from Vercel!' });
+}
