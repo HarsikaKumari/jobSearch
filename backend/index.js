@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(urlencoded({ extended: true }));
 app.use(cookieParser());
 const corsOption = {
-    origin: "http://localhost:5173",
+    origin: "https://harsika-job-search.vercel.app/",
     credentials: true,
 }
 app.use(cors(corsOption));
@@ -32,7 +32,7 @@ const PORT = 3000 || process.env.PORT;
 // Health check endpoint
 app.get('/', (req, res) => {
     console.info('Health check endpoint accessed');
-    res.status(200).json({ message: 'Welcome to the AI Tutor API!' });
+    res.status(200).json({ message: 'Welcome to job search API!' });
 });
 
 app.listen(PORT, () => {
