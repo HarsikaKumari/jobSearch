@@ -29,6 +29,12 @@ app.use('/api/v1/application', applicationRoute);
 
 const PORT = 3000 || process.env.PORT;
 
+// Health check endpoint
+app.get('/', (req, res) => {
+    console.info('Health check endpoint accessed');
+    res.status(200).json({ message: 'Welcome to the AI Tutor API!' });
+});
+
 app.listen(PORT, () => {
     connectDB();
     console.log(`Server running on port ${PORT}`);
