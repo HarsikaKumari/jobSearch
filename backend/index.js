@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
     res.status(200).json({ message: 'Welcome to job search API!' });
 });
 
-connectDB();
+await connectDB();
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
