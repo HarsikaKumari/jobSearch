@@ -103,7 +103,9 @@ export const login = async (req, res) => {
                 maxAge: 1 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
                 sameSite: 'Strict'
-            })
+            }).setHeader('Set-Cookie', [
+                `token=${token}; Max-Age=86400; Path=/; HttpOnly; SameSite=Strict`
+            ])
             .json({
                 message: `Welcome back ${user.fullname}`,
                 user,
